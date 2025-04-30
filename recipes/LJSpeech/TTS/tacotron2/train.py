@@ -310,6 +310,10 @@ def dataio_prepare(hparams):
         )
 
         audio = sb.dataio.dataio.read_audio(wav)
+        #print('before',audio.shape)
+        if audio.shape[-1] == 2:
+          audio = torch.mean(audio, dim=-1)
+        #print('after',audio.shape)
         mel = hparams["mel_spectogram"](audio=audio)
 
         len_text = len(text_seq)
