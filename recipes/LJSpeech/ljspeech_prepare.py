@@ -315,28 +315,19 @@ def split_sets(data_folder, splits, split_ratio):
 
     session_len = [len(session) for session in index_for_sessions]
 
-    data_split = {}
-    for i, split in enumerate(splits):
-        data_split[split] = []
-        for j in range(len(index_for_sessions)):
-            if split == "train":
-                random.shuffle(index_for_sessions[j])
-                n_snts = int(session_len[j] * split_ratio[i] / sum(split_ratio))
-                data_split[split].extend(index_for_sessions[j][0:n_snts])
-                del index_for_sessions[j][0:n_snts]
-            if split == "valid":
-                if "test" in splits:
-                    random.shuffle(index_for_sessions[j])
-                    n_snts = int(
-                        session_len[j] * split_ratio[i] / sum(split_ratio)
-                    )
-                    data_split[split].extend(index_for_sessions[j][0:n_snts])
-                    del index_for_sessions[j][0:n_snts]
-                else:
-                    data_split[split].extend(index_for_sessions[j])
-            if split == "test":
-                data_split[split].extend(index_for_sessions[j])
+    total_samples = len(meta_csv)
+    train_cutoff = 100  # or use min(total_samples, 100) for safety
 
+    indices = list(range(total_samples))
+
+    data_split = {
+      "train": indices[:train_cutoff],
+      "valid": indices[train_cutoff:],
+    }
+    if "test" in splits:
+      data_split["test"] = []  # or handle however you'd like
+
+    print(data_split)
     return data_split, meta_csv
 
 
