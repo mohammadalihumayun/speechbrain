@@ -16,7 +16,7 @@ output_folder: /content/drive/MyDrive/tts
 save_folder: !ref <output_folder>/save
 train_log: !ref <output_folder>/train_log.txt
 epochs: 10
-keep_checkpoint_interval: 50
+keep_checkpoint_interval: 5
 
 ###################################
 # Progress Samples                #
