@@ -15,7 +15,7 @@ __set_seed: !apply:speechbrain.utils.seed_everything [!ref <seed>]
 output_folder: /content/drive/MyDrive/tts
 save_folder: !ref <output_folder>/save
 train_log: !ref <output_folder>/train_log.txt
-epochs: 750
+epochs: 10
 keep_checkpoint_interval: 50
 
 ###################################
